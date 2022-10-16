@@ -133,6 +133,35 @@ public class MainWindow extends JFrame {
         applyRemovePanel.setLayout(new BoxLayout(applyRemovePanel, BoxLayout.Y_AXIS));
         transformSettingsPanel.add(applyRemovePanel);
 
+        JPanel scaleXPanel = new JPanel();
+        scaleXPanel.setLayout(new BoxLayout(scaleXPanel, BoxLayout.Y_AXIS));
+        transformationPanel.add(scaleXPanel);
+
+        scaleXPanel.add(new JLabel("Растяжение по X"));
+
+        JTextField scaleXValue = new JTextField();
+        scaleXValue.setText("0");
+        scaleXValue.setMaximumSize(SMALL);
+        scaleXPanel.add(scaleXValue);
+
+        JButton applyScaleX = new JButton("Растянуть по X");
+        scaleXPanel.add(applyScaleX);
+
+
+        JPanel scaleYPanel = new JPanel();
+        scaleYPanel.setLayout(new BoxLayout(scaleYPanel, BoxLayout.Y_AXIS));
+        transformationPanel.add(scaleYPanel);
+
+        scaleYPanel.add(new JLabel("Растяжение по Y"));
+
+        JTextField scaleYValue = new JTextField();
+        scaleYValue.setText("0");
+        scaleYValue.setMaximumSize(SMALL);
+        scaleYPanel.add(scaleYValue);
+
+        JButton applyScaleY = new JButton("Растянуть по Y");
+        scaleYPanel.add(applyScaleY);
+
         JButton applyTransform = new JButton("Применить трансформацию");
         applyRemovePanel.add(applyTransform);
 
@@ -206,6 +235,30 @@ public class MainWindow extends JFrame {
             double translateX = Double.parseDouble(translateXValue.getText());
             double translateY = Double.parseDouble(translateYValue.getText());
             redactor.addTransformation(new Moving(translateX, translateY));
+            drawPanel.setTargetPreview(redactor.getPreview());
+            drawPanel.repaint();
+        });
+
+        applyScaleX.addActionListener(e -> {
+            double scale = Double.parseDouble(scaleXValue.getText());
+            try {
+                redactor.addTransformation(new SzhatX(scale));
+                exceptionLabel.setText("");
+            }  catch (RuntimeException exception) {
+                exceptionLabel.setText(exception.getMessage());
+            }
+            drawPanel.setTargetPreview(redactor.getPreview());
+            drawPanel.repaint();
+        });
+
+        applyScaleY.addActionListener(e -> {
+            double scale = Double.parseDouble(scaleYValue.getText());
+            try {
+                redactor.addTransformation(new SzhatY(scale));
+                exceptionLabel.setText("");
+            } catch (RuntimeException exception) {
+                exceptionLabel.setText(exception.getMessage());
+            }
             drawPanel.setTargetPreview(redactor.getPreview());
             drawPanel.repaint();
         });
