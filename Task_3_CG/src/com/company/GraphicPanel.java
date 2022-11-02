@@ -7,8 +7,9 @@ public class GraphicPanel extends JPanel {
     private Color graphicColor = Color.GREEN;
     private int width;
     private int height;
-    private String param;
+    private String e = null;
 
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -18,6 +19,13 @@ public class GraphicPanel extends JPanel {
         drawGrid(g); // рисуем сетку
         drawAxis(g);
         // рисуем оси
+        if (e != null) {
+            g.setColor(graphicColor); // устанавливаем цвет графика
+            for(int x = 0; x < width; x++){           // делаем цикл с левой стороны экрана до правой
+                double y = FunctionParser.retY(e ,x);  // переводим значение синуса в координату нашей системы
+                g.drawOval(x, (int) y, 2, 2);   // рисуем кружок в этой точке
+            }
+        }
     }
 
     private void drawGrid(Graphics g) {
@@ -46,20 +54,8 @@ public class GraphicPanel extends JPanel {
         g.drawLine(0, height/2, width, height/2);
     }
 
-    public void drawGraphic(Graphics g, String e) {
-        g.setColor(graphicColor); // устанавливаем цвет графика
-        for(int x = 0; x < width; x++){           // делаем цикл с левой стороны экрана до правой
-            double y = FunctionParser.retY(e ,x);  // переводим значение синуса в координату нашей системы
-            g.drawOval(x, (int) y, 2, 2);   // рисуем кружок в этой точке
-        }
+    public void setExpression(String e) {
+        this.e = e;
     }
 
-    public void paintGraf(Graphics g, String e){
-        drawGraphic(g, e);
-    }
-
-    public void setNameAndColor(String e) {
-        param = e;
-        repaint();
-    }
 }

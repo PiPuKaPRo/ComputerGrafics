@@ -87,15 +87,10 @@ public class GraphicApp {
         JButton smaller = new JButton("Уменьшить"); // Кнопка
         panel.add(smaller);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                changeGraphicColor();
-            }
-            private void changeGraphicColor(){
-                String color = nameTextField.getText();
-                graphicPanel.setNameAndColor(color);
-            }
+        button.addActionListener(e -> {
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
         });
         panel.add(button);
         return panel;
