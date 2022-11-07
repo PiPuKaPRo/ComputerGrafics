@@ -2,12 +2,17 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphicPanel extends JPanel {
-    private Color graphicColor = Color.GREEN;
+    private Color graphicColor = Color.RED;
     private int width;
     private int height;
+    private double startX;
+    private double startY;
     private String e = null;
+    private double sizeOfGrid = 30;
 
     @Override
     public void paint(Graphics g)
@@ -18,12 +23,18 @@ public class GraphicPanel extends JPanel {
 
         drawGrid(g); // рисуем сетку
         drawAxis(g);
+
+
+
         // рисуем оси
         if (e != null) {
-            g.setColor(graphicColor); // устанавливаем цвет графика
-            for(int x = 0; x < width; x++){           // делаем цикл с левой стороны экрана до правой
-                double y = FunctionParser.retY(e ,x);  // переводим значение синуса в координату нашей системы
-                g.drawOval(x, (int) y, 2, 2);   // рисуем кружок в этой точке
+            g.setColor(graphicColor);
+            double x = 0;
+            double y = 0;
+            for (double i = -150; i < 150; i+=0.004) {
+                x = i * sizeOfGrid + width/2;
+                y = -FunctionParser.retY(e, i) * sizeOfGrid + height/2;
+                g.fillOval((int) x, (int) y, 5, 5);
             }
         }
     }
