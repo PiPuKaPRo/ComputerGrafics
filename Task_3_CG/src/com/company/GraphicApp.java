@@ -12,7 +12,6 @@ public class GraphicApp {
     private JTextField nameTextField;
     private GraphicPanel graphicPanel;
     private Container mainContainer;
-    private Moving g;
 
     public GraphicApp() {
         createFrame();
@@ -42,7 +41,6 @@ public class GraphicApp {
         mainContainer.add(leftPanel, BorderLayout.WEST);
 
         graphicPanel = new GraphicPanel();
-        g = new Moving();
         graphicPanel.setBackground(Color.WHITE);
         mainContainer.add(graphicPanel);
     }
@@ -96,11 +94,6 @@ public class GraphicApp {
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
-        });
-        up.addActionListener(e -> {
-            String expression = nameTextField.getText();
-            g.setExpression(expression);
-            g.repaint();
         });
         panel.add(button);
         return panel;

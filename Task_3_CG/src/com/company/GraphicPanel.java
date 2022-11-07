@@ -31,10 +31,11 @@ public class GraphicPanel extends JPanel {
             g.setColor(graphicColor);
             double x = 0;
             double y = 0;
-            for (double i = -150; i < 150; i+=0.004) {
-                x = i * sizeOfGrid + width/2;
-                y = -FunctionParser.retY(e, i) * sizeOfGrid + height/2;
-                drawXiaolinLine((int) x,(int) y,(int) (x+0.004),(int)(y-0.004),g);
+            for (double i = -50; i < 50; i+=0.0001) {
+                x = i * sizeOfGrid + width/2 - 1.5;
+                y = -FunctionParser.retY(e, i) * sizeOfGrid + height/2 - 5;
+                GladPaint.drawLines((int) x,(int) y,(int) (x+1),(int)(y-1),g);
+                //drawXiaolinLine((int) x,(int) y,(int) (x+0.004),(int)(y-0.004),g);
             }
         }
     }
@@ -42,7 +43,7 @@ public class GraphicPanel extends JPanel {
     private void drawGrid(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);  //задаем серый цвет
 
-        for(int x=width/2; x<width; x+=30){  // цикл от центра до правого края
+        for(int x=width/2 ; x<width; x+=30){  // цикл от центра до правого края
             g.drawLine(x, 0, x, height);    // вертикальная линия
         }
 
