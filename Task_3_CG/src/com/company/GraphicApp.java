@@ -11,9 +11,10 @@ public class GraphicApp {
     private JTextField paramTextField;
     private JTextField nameTextField;
     private GraphicPanel graphicPanel;
-    private  Container mainContainer;
+    private Container mainContainer;
+    private Moving g;
 
-    public GraphicApp(){
+    public GraphicApp() {
         createFrame();
         initElements();
     }
@@ -24,7 +25,7 @@ public class GraphicApp {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void show(){
+    public void show() {
         frame.setVisible(true);
     }
 
@@ -32,59 +33,63 @@ public class GraphicApp {
         mainContainer = frame.getContentPane();
         mainContainer.setLayout(new BorderLayout());
 
-        JPanel bottomPanel = new JPanel(); // нижняя панель состояния
-        bottomPanel.setBackground(Color.lightGray); // фон светло-серый
-        mainContainer.add(bottomPanel, BorderLayout.SOUTH); // распологается внизу
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.lightGray);
+        mainContainer.add(bottomPanel, BorderLayout.SOUTH);
 
 
-        Box leftPanel = createLeftPanel(); // создаем левую панель в другом методе
-        mainContainer.add(leftPanel, BorderLayout.WEST); // эта панель будет слева
+        Box leftPanel = createLeftPanel();
+        mainContainer.add(leftPanel, BorderLayout.WEST);
 
         graphicPanel = new GraphicPanel();
+        g = new Moving();
         graphicPanel.setBackground(Color.WHITE);
         mainContainer.add(graphicPanel);
     }
 
     private Box createLeftPanel() {
-        Box panel = Box.createVerticalBox();  // вертикальный Box
-        // Box это контейнер, в котором элементы выстраиваются в одном порядке
+        Box panel = Box.createVerticalBox();
+
 
         JLabel title = new JLabel("<html>Построение графика функции</html>");
-        // чтобы добавить перевод строки в тексте, нужно писать в тегах <html>
-        title.setFont(new Font(null, Font.BOLD, 12)); // изменяем шрифт
+        title.setFont(new Font(null, Font.BOLD, 12));
         panel.add(title);
 
-        panel.add(Box.createVerticalStrut(20)); //в Box можно добавлять отступы
+        panel.add(Box.createVerticalStrut(20));
 
         panel.add(new JLabel("Функция:"));
 
-        nameTextField = new JTextField();  // поле ввода названия
-        nameTextField.setMaximumSize(new Dimension(300, 30)); // чтобы не был слишком большим
+        nameTextField = new JTextField();
+        nameTextField.setMaximumSize(new Dimension(300, 30));
         panel.add(nameTextField);
 
         panel.add(new JLabel("Параметр:"));
 
-        paramTextField = new JTextField("0");  // поле ввода с начальным текстом
+        paramTextField = new JTextField("0");
         paramTextField.setMaximumSize(new Dimension(300, 30));
         panel.add(paramTextField);
 
-        panel.add(Box.createVerticalGlue()); // также в Box можно добавлять заполнитель пустого места
+        panel.add(Box.createVerticalGlue());
 
-        JButton button = new JButton("Нарисовать"); // Кнопка
+        JButton button = new JButton("Нарисовать");
         panel.add(button);
 
-        JButton up = new JButton("Вверх"); // Кнопка
+        JButton up = new JButton("Вверх");
         panel.add(up);
-        JButton down = new JButton("Вниз"); // Кнопка
+
+        JButton down = new JButton("Вниз");
         panel.add(down);
-        JButton right = new JButton("Вправо"); // Кнопка
+
+        JButton right = new JButton("Вправо");
         panel.add(right);
-        JButton left = new JButton("Влево"); // Кнопка
+
+        JButton left = new JButton("Влево");
         panel.add(left);
 
-        JButton bigger = new JButton("Увеличить"); // Кнопка
+        JButton bigger = new JButton("Увеличить");
         panel.add(bigger);
-        JButton smaller = new JButton("Уменьшить"); // Кнопка
+
+        JButton smaller = new JButton("Уменьшить");
         panel.add(smaller);
 
         button.addActionListener(e -> {
@@ -92,10 +97,12 @@ public class GraphicApp {
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
+        up.addActionListener(e -> {
+            String expression = nameTextField.getText();
+            g.setExpression(expression);
+            g.repaint();
+        });
         panel.add(button);
         return panel;
-
-
-
     }
 }
