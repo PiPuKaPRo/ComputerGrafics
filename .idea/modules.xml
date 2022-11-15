@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CompGraf_Task_1/CompGraf_Task_1.iml" filepath="$PROJECT_DIR$/CompGraf_Task_1/CompGraf_Task_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ComputerGrafics.iml" filepath="$PROJECT_DIR$/.idea/ComputerGrafics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task2_CG/Task2_CG.iml" filepath="$PROJECT_DIR$/Task2_CG/Task2_CG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task_3_CG/Task_3_CG.iml" filepath="$PROJECT_DIR$/Task_3_CG/Task_3_CG.iml" />
+    </modules>
+  </component>
+</project>

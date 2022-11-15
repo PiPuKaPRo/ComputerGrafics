@@ -4,14 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GraphicApp {
+public class GraphicApp{
     private JFrame frame;
     private JLabel statusLabel;
     private JTextField paramTextField;
     private JTextField nameTextField;
     private GraphicPanel graphicPanel;
     private Container mainContainer;
+    private JButton bezierButton;
+    List<Point> points = new ArrayList<>();
+    private JPanel GraphicPanel;
+    private double cof;
 
     public GraphicApp() {
         createFrame();
@@ -43,6 +51,7 @@ public class GraphicApp {
         graphicPanel = new GraphicPanel();
         graphicPanel.setBackground(Color.WHITE);
         mainContainer.add(graphicPanel);
+
     }
 
     private Box createLeftPanel() {
@@ -72,29 +81,34 @@ public class GraphicApp {
         JButton button = new JButton("Нарисовать");
         panel.add(button);
 
-        JButton up = new JButton("Вверх");
-        panel.add(up);
-
-        JButton down = new JButton("Вниз");
+        JButton down = new JButton("-");
         panel.add(down);
 
-        JButton right = new JButton("Вправо");
-        panel.add(right);
-
-        JButton left = new JButton("Влево");
-        panel.add(left);
-
-        JButton bigger = new JButton("Увеличить");
-        panel.add(bigger);
-
-        JButton smaller = new JButton("Уменьшить");
-        panel.add(smaller);
+        JButton up = new JButton("+");
+        panel.add(up);
 
         button.addActionListener(e -> {
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
+
+        up.addActionListener(e -> {
+            graphicPanel.setCof(cof/=2);
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        down.addActionListener(e -> {
+            graphicPanel.setCof(cof*=2);
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        panel.add(down);
+        panel.add(up);
         panel.add(button);
         return panel;
     }
