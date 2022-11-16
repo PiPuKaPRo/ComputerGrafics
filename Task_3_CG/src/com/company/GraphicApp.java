@@ -24,6 +24,11 @@ public class GraphicApp{
     public GraphicApp() {
         createFrame();
         initElements();
+        this.cof = 1;
+    }
+
+    public GraphicApp(double cof) {
+        this.cof = cof;
     }
 
     private void createFrame() {
@@ -88,20 +93,23 @@ public class GraphicApp{
         panel.add(up);
 
         button.addActionListener(e -> {
+            graphicPanel.setCof(cof);
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
 
         up.addActionListener(e -> {
-            graphicPanel.setCof(cof/=2);
+            cof *=0.7;
+            graphicPanel.setCof(cof);
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
 
         down.addActionListener(e -> {
-            graphicPanel.setCof(cof*=2);
+            cof/=0.7;
+            graphicPanel.setCof(cof);
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
