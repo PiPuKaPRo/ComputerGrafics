@@ -23,11 +23,14 @@ public class GraphicApp{
     private JFrame GraphicPanel;
     private double cof;
     private double a;
+    private int moveCof;
+    private int moveCofY;
 
     public GraphicApp() {
         createFrame();
         initElements();
         this.cof = 1;
+        this.moveCof = 0;
 //        this.MouseAction = new MouseAdapter() {
 //            @Override
 //            public void mouseClicked(MouseEvent e) {
@@ -119,17 +122,63 @@ public class GraphicApp{
         JButton button = new JButton("Нарисовать");
         panel.add(button);
 
-        JButton down = new JButton("-");
-        panel.add(down);
+        JButton minus = new JButton("-");
+        panel.add(minus);
 
-        JButton up = new JButton("+");
+        JButton plus = new JButton("+");
+        panel.add(plus);
+
+        JButton left = new JButton("<-");
+        panel.add(left);
+
+        JButton right = new JButton("->");
+        panel.add(right);
+
+        JButton up = new JButton("^");
         panel.add(up);
 
-        JButton bezie = new JButton("b");
-        panel.add(bezie);
+        JButton down = new JButton("v");
+        panel.add(down);
+
 
         button.addActionListener(e -> {
-            graphicPanel.setCof(cof);
+            graphicPanel.setCof(cof,moveCof,moveCofY);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        plus.addActionListener(e -> {
+            cof *=0.7;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        minus.addActionListener(e -> {
+            cof/=0.7;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        left.addActionListener(e -> {
+            moveCof+=30;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
+            String expression = nameTextField.getText();
+            graphicPanel.setExpression(expression);
+            graphicPanel.repaint();
+        });
+
+        right.addActionListener(e -> {
+            moveCof-=30;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
             graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
@@ -137,8 +186,8 @@ public class GraphicApp{
         });
 
         up.addActionListener(e -> {
-            cof *=0.7;
-            graphicPanel.setCof(cof);
+            moveCofY-=30;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
             graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
@@ -146,18 +195,20 @@ public class GraphicApp{
         });
 
         down.addActionListener(e -> {
-            cof/=0.7;
-            graphicPanel.setCof(cof);
+            moveCofY+=30;
+            graphicPanel.setCof(cof,moveCof,moveCofY);
             graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
 
-
-        panel.add(down);
+        panel.add(left);
+        panel.add(right);
         panel.add(up);
-        panel.add(bezie);
+        panel.add(down);
+        panel.add(minus);
+        panel.add(plus);
         panel.add(button);
         return panel;
     }

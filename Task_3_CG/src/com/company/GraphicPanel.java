@@ -15,6 +15,8 @@ public class GraphicPanel extends JPanel {
     private double sizeOfGrid = 30;
     private double cof;
     private double a;
+    private int moveCof;
+    private int moveCofY;
 
 
     @Override
@@ -87,8 +89,8 @@ public class GraphicPanel extends JPanel {
             double x = 0;
             double y = 0;
             for (double i = -50; i < 50; i += 0.0001) {
-                x = a * (i * (1 / cof) * sizeOfGrid + width / 2 - 1.5);
-                y = (-FunctionParser.retY(e, i) * sizeOfGrid + height / 2 - 5);
+                x = a * (i * (1 / cof) * sizeOfGrid + width / 2 - 1.5) + moveCof;
+                y = (-FunctionParser.retY(e, i) * sizeOfGrid + height / 2 - 5) - moveCofY;
                 GladPaint.drawLines((int) x, (int) y, (int) (x + 1), (int) (y - 1), g);
                 //drawXiaolinLine((int) x,(int) y,(int) (x+0.004),(int)(y-0.004),g);
             }
@@ -97,8 +99,8 @@ public class GraphicPanel extends JPanel {
             double x = 0;
             double y = 0;
             for (double i = -50; i < 50; i += 0.0001) {
-                x = a * (i * (1 / cof) * sizeOfGrid + width / 2 - 1.5);
-                y = (-FunctionParserWithParam.retY(e, i) * sizeOfGrid + height / 2 - 5);
+                x = a * (i * (1 / cof) * sizeOfGrid + width / 2 - 1.5) + moveCof;
+                y = (-FunctionParserWithParam.retY(e, i) * sizeOfGrid + height / 2 - 5) - moveCofY;
                 GladPaint.drawLines((int) x, (int) y, (int) (x + 1), (int) (y - 1), g);
             }
 
@@ -109,35 +111,37 @@ public class GraphicPanel extends JPanel {
     private void drawGrid(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);  //задаем серый цвет
 
-        for (int x = width / 2; x < width; x += 30) {  // цикл от центра до правого края
+        for (int x = width / 2 + + moveCof; x < width; x += 30) {  // цикл от центра до правого края
             g.drawLine(x, 0, x, height);    // вертикальная линия
         }
 
-        for (int x = width / 2; x > 0; x -= 30) {  // цикл от центра до леваого края
+        for (int x = width / 2 + moveCof; x > 0; x -= 30) {  // цикл от центра до леваого края
             g.drawLine(x, 0, x, height);   // вертикальная линия
         }
 
-        for (int y = height / 2; y < height; y += 30) {  // цикл от центра до верхнего края
+        for (int y = height / 2 - moveCofY; y < height; y += 30) {  // цикл от центра до верхнего края
             g.drawLine(0, y, width, y);    // горизонтальная линия
         }
 
-        for (int y = height / 2; y > 0; y -= 30) {  // цикл от центра до леваого края
+        for (int y = height / 2 - moveCofY; y > 0; y -= 30) {  // цикл от центра до леваого края
             g.drawLine(0, y, width, y);    // горизонтальная линия
         }
     }
 
     private void drawAxis(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawLine(width / 2, 0, width / 2, height);
-        g.drawLine(0, height / 2, width, height / 2);
+        g.drawLine(width / 2 + + moveCof, 0, width / 2 + + moveCof, height);
+        g.drawLine(0, height / 2 - moveCofY, width, height / 2 - moveCofY);
     }
 
     public void setExpression(String e) {
         this.e = e;
     }
 
-    public void setCof(double cof) {
+    public void setCof(double cof, int moveCof,int moveCofY) {
         this.cof = cof;
+        this.moveCof = moveCof;
+        this.moveCofY = moveCofY;
     }
 
     public void setA(double a) {
