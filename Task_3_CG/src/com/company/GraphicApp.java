@@ -2,12 +2,16 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 
 public class GraphicApp{
     private JFrame frame;
@@ -16,19 +20,47 @@ public class GraphicApp{
     private JTextField nameTextField;
     private GraphicPanel graphicPanel;
     private Container mainContainer;
-    private JButton bezierButton;
-    List<Point> points = new ArrayList<>();
-    private JPanel GraphicPanel;
+    private JFrame GraphicPanel;
     private double cof;
+    private double a;
 
     public GraphicApp() {
         createFrame();
         initElements();
         this.cof = 1;
-    }
+//        this.MouseAction = new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (e.getButton() == MouseEvent.BUTTON1) {
+//                    if (keyPointNum < 4) {
+//                        double x = e.getX();
+//                        double y = e.getY();
+//                        keyPointP[keyPointNum] = new Point2D.Double(x, y);
+//                        keyPointE[keyPointNum] = new Ellipse2D.Double(x - 4, y - 4, 8, 8);
+//                        keyPointNum++;
+//                        graphicPanel.repaint();
+//                    }
+//                } // Щелкните правой кнопкой мыши
+//                else if (e.getButton() == MouseEvent.BUTTON3) {
+//                    flagShow = false; // скрыть силу синей помощи, но на самом деле не удаляет
+//                    graphicPanel.repaint();
+//                }
+//            }
+//        };
+//        this.MouseMotion = new MouseMotionAdapter() {
+//            @Override
+//            public void mouseDragged(MouseEvent e) {
+//                // Клавиша перетаскивания мыши
+//                if (keyPointID != -1) {
+//                    double x = e.getX();
+//                    double y = e.getY();
+//                    keyPointP[keyPointID] = new Point2D.Double(x, y);
+//                    keyPointE[keyPointID] = new Ellipse2D.Double(x - 4, y - 4, 8, 8);
+//                    graphicPanel.repaint();
+//                }
+//            }
+//        };
 
-    public GraphicApp(double cof) {
-        this.cof = cof;
     }
 
     private void createFrame() {
@@ -59,6 +91,7 @@ public class GraphicApp{
 
     }
 
+
     private Box createLeftPanel() {
         Box panel = Box.createVerticalBox();
 
@@ -77,7 +110,7 @@ public class GraphicApp{
 
         panel.add(new JLabel("Параметр:"));
 
-        paramTextField = new JTextField("0");
+        paramTextField = new JTextField("1");
         paramTextField.setMaximumSize(new Dimension(300, 30));
         panel.add(paramTextField);
 
@@ -92,8 +125,12 @@ public class GraphicApp{
         JButton up = new JButton("+");
         panel.add(up);
 
+        JButton bezie = new JButton("b");
+        panel.add(bezie);
+
         button.addActionListener(e -> {
             graphicPanel.setCof(cof);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
@@ -102,6 +139,7 @@ public class GraphicApp{
         up.addActionListener(e -> {
             cof *=0.7;
             graphicPanel.setCof(cof);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
@@ -110,13 +148,16 @@ public class GraphicApp{
         down.addActionListener(e -> {
             cof/=0.7;
             graphicPanel.setCof(cof);
+            graphicPanel.setA(Double.parseDouble(paramTextField.getText()));
             String expression = nameTextField.getText();
             graphicPanel.setExpression(expression);
             graphicPanel.repaint();
         });
 
+
         panel.add(down);
         panel.add(up);
+        panel.add(bezie);
         panel.add(button);
         return panel;
     }
